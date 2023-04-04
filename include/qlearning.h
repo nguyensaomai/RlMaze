@@ -14,18 +14,12 @@ extern int state_col;
 extern int goal_row;
 extern int goal_col;
 
-
 extern double** q;
 
 
 
 
-
-
-
-
-
-
+void init_q();
 
 
 

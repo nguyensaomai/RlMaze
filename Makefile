@@ -6,16 +6,14 @@
 src/main		: clean src/main.o src/qlearning.o src/dfs.o src/functions.o src/mazeEnv.o
 	gcc -I include/ -g -o src/main.x src/main.o src/qlearning.o src/dfs.o src/functions.o src/mazeEnv.o -Wall
 
-src/dfs         : src/dfs.o src/functions.o src/mazeEnv.o
-	gcc -I include/ -g -o src/dfs.x src/dfs.o src/functions.o src/mazeEnv.o -Wall
 
 src/main.o      : src/main.c
 	gcc -I include/ -g -o src/main.o -c src/main.c -Wall
 
-src/qlearning.o	: src/qlearning.c
+src/qlearning.o	: src/qlearning.c include/qlearning.h
 	gcc -I include/ -g -o src/qlearning.o -c src/qlearning.c -Wall
 
-src/dfs.o       : src/dfs.c
+src/dfs.o       : src/dfs.c include/dfs.h
 	gcc -I include/ -g -o src/dfs.o -c src/dfs.c -Wall
 
 src/functions.o : src/functions.c include/functions.h
@@ -25,7 +23,17 @@ src/mazeEnv.o   : src/mazeEnv.c include/mazeEnv.h
 	gcc -I include/ -g -o src/mazeEnv.o -c src/mazeEnv.c -Wall
 
 clean:
-	rm src/*.o
+	find . -type f -name "*.o" -delete
 
 realclean: clean
-	rm src/*.x
+	find . -type f -name "*.x" -delete
+
+
+
+
+
+
+
+
+
+
