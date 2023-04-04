@@ -94,6 +94,13 @@ void mazeEnv_reset(){
      state_col = start_col;
 }
 
+void mazeEnv_free(){
+     for(int i=0; i<rows; i++) {
+         free(mazeEnv[i]);
+     }
+     free(mazeEnv);
+}
+
 //faire une action &observer récompense et où on se trouve
 envOutput mazeEnv_step(action a){
     int reward = 0;
@@ -153,6 +160,15 @@ void init_visited()
                         }
                 }
         }
+}
+
+void free_visited()
+{
+        int i;
+        for (i = 0; i < rows; ++i) {
+                free(visited[i]);
+        }
+        free(visited);
 }
 
 void add_crumbs(){

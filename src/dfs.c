@@ -39,6 +39,9 @@ int main(){
    dfs(start_row,start_col);
    add_crumbs();
    mazeEnv_render();
+
+    mazeEnv_free();
+    free_visited();
    return 0;
 }
 

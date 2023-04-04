@@ -53,6 +53,8 @@ void mazeEnv_render_pos();
 
 void mazeEnv_reset();
 
+void mazeEnv_free();
+
 envOutput mazeEnv_step(action a); 
 
 action env_action_sample();
@@ -60,6 +62,8 @@ action env_action_sample();
 void alloc_visited();
 
 void init_visited();
+
+void free_visited();
 
 void add_crumbs();
 
