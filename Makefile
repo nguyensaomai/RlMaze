@@ -3,9 +3,17 @@
 #CFLAGS = -Wall -Werror
 # TODO : redo this Makefile in a better way
 
+src/main		: clean src/main.o src/qlearning.o src/dfs.o src/functions.o src/mazeEnv.o
+	gcc -I include/ -g -o src/main.x src/main.o src/qlearning.o src/dfs.o src/functions.o src/mazeEnv.o -Wall
+
 src/dfs         : src/dfs.o src/functions.o src/mazeEnv.o
 	gcc -I include/ -g -o src/dfs.x src/dfs.o src/functions.o src/mazeEnv.o -Wall
 
+src/main.o      : src/main.c
+	gcc -I include/ -g -o src/main.o -c src/main.c -Wall
+
+src/qlearning.o	: src/qlearning.c
+	gcc -I include/ -g -o src/qlearning.o -c src/qlearning.c -Wall
 
 src/dfs.o       : src/dfs.c
 	gcc -I include/ -g -o src/dfs.o -c src/dfs.c -Wall
