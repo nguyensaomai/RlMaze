@@ -7,7 +7,7 @@ src/main		: clean src/main.o src/qlearning.o src/dfs.o src/functions.o src/mazeE
 	gcc -I include/ -g -o src/main.x src/main.o src/qlearning.o src/dfs.o src/functions.o src/mazeEnv.o -Wall
 
 
-src/main.o      : src/main.c
+src/main.o      : src/main.c include/main.h
 	gcc -I include/ -g -o src/main.o -c src/main.c -Wall
 
 src/qlearning.o	: src/qlearning.c include/qlearning.h

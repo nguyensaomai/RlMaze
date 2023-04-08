@@ -28,9 +28,9 @@ enum action{
      down,
      left,
      right,
-     number_actions 
+     number_actions
 };
- 
+
 typedef enum action action ;
 
 struct envOutput{
@@ -53,7 +53,7 @@ void mazeEnv_render_pos();
 
 void mazeEnv_reset();
 
-envOutput mazeEnv_step(action a); 
+envOutput mazeEnv_step(action a);
 
 action env_action_sample();
 
