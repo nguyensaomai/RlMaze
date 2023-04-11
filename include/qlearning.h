@@ -16,10 +16,23 @@ extern int goal_col;
 
 extern double** q;
 
-
-
-
 void init_q();
+
+int actions_to_int(action a);
+
+action int_to_action(int i);
+
+double max_actions(int s);
+
+int best_action(int s);
+
+void epsilon_greedy();
+
+void print_q();
+
+void destroy_q();
+
+
 
 
 

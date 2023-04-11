@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 extern char** mazeEnv;
 extern int** visited;
@@ -62,5 +63,7 @@ void alloc_visited();
 void init_visited();
 
 void add_crumbs();
+
+void destroy_maze();
 
 #endif /* MAZEENV_H */
