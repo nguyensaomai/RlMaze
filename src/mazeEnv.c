@@ -109,7 +109,7 @@ void mazeEnv_render()
 // display the maze with an 'o' on current position
 void mazeEnv_render_pos()
 {
-    mazeEnv[state_row][state_col] = 'o';
+    mazeEnv[state_row][state_col] = 'k';
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -134,25 +134,41 @@ envOutput mazeEnv_step(action a)
     int reward = 0;
     int done = 0;
     envOutput stepOut;  // cf /mazeEnv.h/
-
+    mazeEnv[state_row][state_col] = 'o';
     if (a == up)
     {
-        state_row = max(0, state_row - 1);  // won't go up if it can't anymore
+        //state_row = max(0, state_row - 1);  // won't go up if it can't anymore
+        if (mazeEnv[state_row - 1][state_col] != '+' && state_row - 1 >= 0)
+        {
+            state_row -= 1;
+        }
         reward = -1; //added
     }
     else if (a == down)
     {
-        state_row = min(rows, state_row + 1);  // won't go down if it can't anymore
+        //state_row = min(rows, state_row + 1);  // won't go down if it can't anymore
+        if (mazeEnv[state_row + 1][state_col] != '+' && state_row + 1 < rows)
+        {
+            state_row += 1;
+        }
         reward = -1;  // added 
     }
     else if (a == right)
     {
-        state_col = min(cols, state_col + 1);  // won't go right if it can't anymore
+        //state_col = min(cols, state_col + 1);  // won't go right if it can't anymore
+        if (mazeEnv[state_row][state_col + 1] != '+' && state_col + 1 < cols)
+        {
+            state_col += 1;
+        }
         reward = -1; //added
     }
     else if (a == left)
     {
-        state_col = max(0, state_col - 1);  // won't go left if it can't anymore
+        //state_col = max(0, state_col - 1);  // won't go left if it can't anymore
+        if (mazeEnv[state_row][state_col - 1] != '+' && state_col - 1 >= 0)
+        {
+            state_col -= 1;
+        }
         reward = -1; //added
     }
 
@@ -166,6 +182,8 @@ envOutput mazeEnv_step(action a)
     stepOut.done = done;  // done only if on the goal (to use later if other cases can end the explorer)
     stepOut.new_col = state_col;  // on which column the explorer ends after this action
     stepOut.new_row = state_row;  // on which row the explorer ends after this action
+    
+    
 
     return stepOut;
 }
@@ -233,13 +251,13 @@ void add_crumbs()
 void destroy_maze(){
     for (int i = 0; i < rows; i++)
     {
-        free( mazeEnv[i]);
+        free(mazeEnv[i]);
     }
     free (mazeEnv);
 
-    for (int i = 0; i < rows; ++i)
-    {
-        free( visited[i]);
-    }
-    free (visited);
+    // for (int i = 0; i < rows; ++i)
+    // {
+    //     free( visited[i]);
+    // }
+    // free (visited);
 }

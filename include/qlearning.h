@@ -28,6 +28,8 @@ int best_action(int s);
 
 void epsilon_greedy();
 
+void visualise();
+
 void print_q();
 
 void destroy_q();

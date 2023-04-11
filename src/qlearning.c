@@ -4,10 +4,10 @@
 
 
 double learning_rate = 0.5;
-int number_episode = 1000;
-double return_rate = 0.9;
-int horizon = 1000;
-float epsilon = 0.3;
+int number_episode = 10000;
+double return_rate = 0.99;
+int horizon = 100000;
+float epsilon = 0.5;
 
 
 void init_q()
@@ -57,8 +57,6 @@ action int_to_action(int i){
     else {
         return left;
     }
-        
-    
 }
 
 
@@ -88,48 +86,50 @@ int best_action(int s){
 }
 
 void epsilon_greedy(){
-    for (int i =0; i< number_episode; i++ ){
-        int s = start_col +start_row*cols; //Initialization of the state
+    for (int i = 0; i< number_episode; i++ ){
+        // printf("episode : %d \n", i);
+
+        int s = start_col + start_row*cols; //Initialization of the state
         int n = 0; //Number of actions performed in the episode
         int done =0;
 
         //Initialization of the variables 
         int next_action;
         float tirage;
-        struct envOutput Env;
-        int next_s;
+        struct envOutput EnvOut;
+        int next_s = s;
         srand(time(NULL));
 
 
         //Pick an action unless the goal is reached 
-        while (n<horizon && done ==0){
+        while (n<horizon && done == 0){
 
-            //Pick an action according to the epsilon greedy algorithme
+            //Pick an action according to the epsilon greedy algorithm
 
-            next_action = 0;
-            tirage = 0;
+            tirage = rand() / (RAND_MAX + 1.0);
             
-            tirage = rand() / (RAND_MAX +1.0);
-            
-
-            if (tirage <epsilon){
-                next_action = env_action_sample();
+            if (tirage < epsilon){
+                next_action = actions_to_int(env_action_sample());
             }
             else {
                 next_action = best_action(s);
             }
 
-            //Upadating Q with the new state
-        
-            Env = mazeEnv_step(int_to_action(next_action));
-            next_s = Env.new_col + Env.new_row*cols;
-            done = Env.done;
+            // printf("action : %d \n", n);
+            // printf("%d \n", next_action);
 
-            q[s][next_action]= q[s][next_action] + learning_rate*(Env.reward + return_rate*max_actions(next_s)- q[s][next_action]);
+            //Updating Q with the new state
+        
+            EnvOut = mazeEnv_step(int_to_action(next_action));
+            next_s = EnvOut.new_col + EnvOut.new_row*cols;
+            done = EnvOut.done;
+
+            // mazeEnv_render_pos();
+            
+
+            q[s][next_action]= q[s][next_action] + learning_rate*(EnvOut.reward + return_rate*max_actions(next_s) - q[s][next_action]);
             s = next_s;
             n++;
-
-
         }
 
     }
@@ -137,10 +137,39 @@ void epsilon_greedy(){
 }
 
 
+void visualise (){
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++){
+            if (mazeEnv[i][j] == 'o' || mazeEnv[i][j] == 'k')
+            {
+                switch (best_action(j + i*cols))
+                {
+                case 0:
+                    printf("^ ");
+                    break;
+                case 1:
+                    printf("v ");
+                    break;
+                case 2:
+                    printf("> ");
+                    break;
+                case 3:
+                    printf("< ");
+                    break;
+                }
+            }
+            else
+            {
+                printf("%c ", mazeEnv[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
 void print_q (){
     for (int i = 0; i < rows * cols; i++){
         printf("%d : up %lf down %lf right %lf left %lf \n", i, q[i][0], q[i][1], q[i][2], q[i][3]);
-
     }
 }
 
