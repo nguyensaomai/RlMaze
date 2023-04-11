@@ -1,4 +1,5 @@
 
+
 #CC = gcc
 #CFLAGS = -Wall -Werror
 # TODO : redo this Makefile in a better way
@@ -13,7 +14,7 @@ src/main.o      : src/main.c include/main.h
 src/qlearning.o	: src/qlearning.c include/qlearning.h
 	gcc -I include/ -g -o src/qlearning.o -c src/qlearning.c -Wall
 
-src/dfs.o       : src/dfs.c include/dfs.h
+src/dfs.o       : src/dfs.c  include/dfs.h include/mazeEnv.h
 	gcc -I include/ -g -o src/dfs.o -c src/dfs.c -Wall
 
 src/functions.o : src/functions.c include/functions.h
