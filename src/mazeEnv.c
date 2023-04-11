@@ -138,22 +138,22 @@ envOutput mazeEnv_step(action a)
     if (a == up)
     {
         state_row = max(0, state_row - 1);  // won't go up if it can't anymore
-        reward = -1;
+        reward = -1; //added
     }
     else if (a == down)
     {
         state_row = min(rows, state_row + 1);  // won't go down if it can't anymore
-        reward = -1;
+        reward = -1;  // added 
     }
     else if (a == right)
     {
         state_col = min(cols, state_col + 1);  // won't go right if it can't anymore
-        reward = -1;
+        reward = -1; //added
     }
     else if (a == left)
     {
         state_col = max(0, state_col - 1);  // won't go left if it can't anymore
-        reward = -1;
+        reward = -1; //added
     }
 
     if ((state_row == goal_row) && (state_col == goal_col))  // if current position is goal position
